@@ -3,35 +3,35 @@ package me.jddev0.epct.datagen;
 import com.epherical.croptopia.common.MiscNames;
 import com.epherical.croptopia.register.Content;
 import com.epherical.croptopia.register.helpers.FarmlandCrop;
+import me.jddev0.ep.datagen.recipe.PlantGrowthChamberFinishedRecipe;
+import me.jddev0.ep.datagen.recipe.PulverizerFinishedRecipe;
 import me.jddev0.ep.recipe.OutputItemStackWithPercentages;
-import me.jddev0.ep.recipe.PlantGrowthChamberRecipe;
 import me.jddev0.ep.recipe.PulverizerRecipe;
 import me.jddev0.epct.EnergizedPowerCTMod;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
     private static final String CROPTOPIA_MOD_ID = MiscNames.MOD_ID;
     private static final String PATH_PREFIX = "compat/" + CROPTOPIA_MOD_ID + "/";
 
-    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookupProvider) {
-        super(output, lookupProvider);
+    public ModRecipeProvider(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
-    public void generate(RecipeExporter output) {
+    public void generate(Consumer<RecipeJsonProvider> output) {
         buildPulverizerRecipes(output);
         buildPlantGrowthChamberRecipes(output);
     }
 
-    private void buildPulverizerRecipes(RecipeExporter output) {
+    private void buildPulverizerRecipes(Consumer<RecipeJsonProvider> output) {
         addPulverizerRecipe(output, Ingredient.ofItems(Content.SALT_ORE),
                 new PulverizerRecipe.OutputItemStackWithPercentages(new ItemStack(Content.SALT), new double[] {
                         1., 1., 1., 1., .5, .5
@@ -41,7 +41,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 "salt_ore");
     }
 
-    private void buildPlantGrowthChamberRecipes(RecipeExporter output) {
+    private void buildPlantGrowthChamberRecipes(Consumer<RecipeJsonProvider> output) {
         addBasicCropGrowingRecipeNoSeeds(output, Content.ARTICHOKE);
         addBasicCropGrowingRecipeNoSeeds(output, Content.ASPARAGUS);
         addBasicCropGrowingRecipeNoSeeds(output, Content.BARLEY);
@@ -102,37 +102,43 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         addBasicCropGrowingRecipeNoSeeds(output, Content.ZUCCHINI);
     }
 
-    private void addPulverizerRecipe(RecipeExporter RecipeExporter, Ingredient input,
+    private void addPulverizerRecipe(Consumer<RecipeJsonProvider> recipeOutput, Ingredient input,
                                      PulverizerRecipe.OutputItemStackWithPercentages output,
                                      String recipeIngredientName) {
-        addPulverizerRecipe(RecipeExporter, input, output,
+        addPulverizerRecipe(recipeOutput, input, output,
                 new PulverizerRecipe.OutputItemStackWithPercentages(ItemStack.EMPTY, new double[0], new double[0]), recipeIngredientName);
     }
-    private void addPulverizerRecipe(RecipeExporter RecipeExporter, Ingredient input,
+    private void addPulverizerRecipe(Consumer<RecipeJsonProvider> recipeOutput, Ingredient input,
                                      PulverizerRecipe.OutputItemStackWithPercentages output,
                                      PulverizerRecipe.OutputItemStackWithPercentages secondaryOutput,
                                      String recipeIngredientName) {
         Identifier recipeId = Identifier.of(EnergizedPowerCTMod.MODID, PATH_PREFIX + "pulverizer/" +
                 getItemPath(output.output().getItem()) + "_from_pulverizing_" + recipeIngredientName);
 
-        PulverizerRecipe recipe = new PulverizerRecipe(output, secondaryOutput, input);
-        RecipeExporter.accept(recipeId, recipe, null);
+        PulverizerFinishedRecipe recipe = new PulverizerFinishedRecipe(
+                recipeId,
+                output, secondaryOutput, input
+        );
+        recipeOutput.accept(recipe);
     }
 
-    private void addBasicCropGrowingRecipeNoSeeds(RecipeExporter RecipeExporter, FarmlandCrop farmlandCrop) {
-        addPlantGrowthChamberRecipe(RecipeExporter, Ingredient.ofItems(farmlandCrop.getSeedItem()), new OutputItemStackWithPercentages[] {
+    private void addBasicCropGrowingRecipeNoSeeds(Consumer<RecipeJsonProvider> recipeOutput, FarmlandCrop farmlandCrop) {
+        addPlantGrowthChamberRecipe(recipeOutput, Ingredient.ofItems(farmlandCrop.getSeedItem()), new OutputItemStackWithPercentages[] {
                 new OutputItemStackWithPercentages(new ItemStack(farmlandCrop.asItem()), new double[] {
                         1., .75, .25, .25
                 }),
         }, 16000, getItemPath(farmlandCrop.asItem()), getItemPath(farmlandCrop.getSeedItem()));
     }
-    private void addPlantGrowthChamberRecipe(RecipeExporter RecipeExporter, Ingredient input,
+    private void addPlantGrowthChamberRecipe(Consumer<RecipeJsonProvider> recipeOutput, Ingredient input,
                                              OutputItemStackWithPercentages[] outputs, int ticks,
                                              String outputName, String recipeIngredientName) {
         Identifier recipeId = Identifier.of(EnergizedPowerCTMod.MODID, PATH_PREFIX + "growing/" +
                 outputName + "_from_growing_" + recipeIngredientName);
 
-        PlantGrowthChamberRecipe recipe = new PlantGrowthChamberRecipe(outputs, input, ticks);
-        RecipeExporter.accept(recipeId, recipe, null);
+        PlantGrowthChamberFinishedRecipe recipe = new PlantGrowthChamberFinishedRecipe(
+                recipeId,
+                outputs, input, ticks
+        );
+        recipeOutput.accept(recipe);
     }
 }

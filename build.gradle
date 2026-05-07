@@ -1,15 +1,15 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.1-SNAPSHOT'
     id 'maven-publish'
     id "me.shedaniel.unified-publishing" version "0.1.+"
 }
 
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
-
-base {
-    archivesName = project.archives_base_name
-}
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
@@ -50,14 +50,26 @@ repositories {
     }
 }
 
-fabricApi {
-    configureDataGeneration {
-        getOutputDirectory().set(getProject().file("src/generated/resources"))
-
-        setModId(project.modid)
+loom {
+    runs {
+        datagen {
+            inherit server
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+            vmArg "-Dfabric-api.datagen.modid=${modid}"
+        }
     }
+}
 
-    loom.runConfigs.datagen.runDir("run")
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    'src/generated/resources'
+            ]
+        }
+    }
 }
 
 dependencies {
@@ -75,25 +87,25 @@ dependencies {
     // modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
     // Team Reborn: Fabric energy
-    include modApi('teamreborn:energy:4.1.0') {
+    include modApi('teamreborn:energy:3.0.0') {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
     // Energized Power dependency
-    modCompileOnly "curse.maven:energized-power-782147:8022731"
+    modCompileOnly "curse.maven:energized-power-782147:8022722"
 
-    modLocalRuntime "curse.maven:energized-power-782147:8022731"
+    modLocalRuntime "curse.maven:energized-power-782147:8022722"
 
     // Croptopia
-    modCompileOnly "curse.maven:croptopia-415438:7958878"
+    modCompileOnly "curse.maven:croptopia-415438:7964264"
 
-    modLocalRuntime "curse.maven:croptopia-415438:7958878"
-    modLocalRuntime "curse.maven:epherolib-885449:6379763"
+    modLocalRuntime "curse.maven:croptopia-415438:7964264"
+    modLocalRuntime "curse.maven:epherolib-885449:4949797"
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    modLocalRuntime "dev.emi:emi-fabric:1.1.13+1.21.1"
+    modLocalRuntime "dev.emi:emi-fabric:1.0.12+1.20.1"
 }
 
 processResources {
@@ -105,7 +117,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 21
+    it.options.release = 17
 }
 
 java {
@@ -113,9 +125,6 @@ java {
     // if it is present.
     // If you remove this line, sources will not be generated.
     withSourcesJar()
-
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
@@ -154,7 +163,7 @@ tasks.register("distJar", Copy) {
 
     dependsOn(tasks.getByName("remapJar"))
 
-    var jarFile = project.rootDir.toPath().resolve("build/libs").resolve(project.archives_base_name + "-" + project.version + ".jar").toFile()
+    var jarFile = project.rootDir.toPath().resolve("build/libs").resolve(project.modid + "-" + project.version + ".jar").toFile()
     from(jarFile)
     doFirst {
         file(project.rootDir.toPath().resolve("build/libs/dist")).mkdirs()
@@ -163,7 +172,7 @@ tasks.register("distJar", Copy) {
 }
 
 tasks.publishUnified {
-    dependsOn distJar
+    dependsOn(tasks.distJar)
 }
 
 unifiedPublishing {
