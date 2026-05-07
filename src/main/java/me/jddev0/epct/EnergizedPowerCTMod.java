@@ -1,28 +1,15 @@
 package me.jddev0.epct;
 
 import com.mojang.logging.LogUtils;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 
-@Mod(EnergizedPowerCTMod.MODID)
-public class EnergizedPowerCTMod {
+public class EnergizedPowerCTMod implements ModInitializer {
     public static final String MODID = "energizedpowerct";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
-    public EnergizedPowerCTMod(IEventBus modEventBus) {
+    @Override
+    public void onInitialize() {
 
-    }
-
-    @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-
-        }
     }
 }

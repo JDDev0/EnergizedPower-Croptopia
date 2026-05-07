@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "energizedpowerct",
+	"version": "${version}",
+	"name": "Energized Power - Croptopia",
+	"description": "Compatibility between Energized Power and Croptopia",
+	"authors": [
+		"JDDev0"
+	],
+	"contact": {
+		"homepage": "https://github.com/JDDev0/EnergizedPower-Croptopia",
+		"sources": "https://github.com/JDDev0/EnergizedPower-Croptopia",
+		"issues": "https://github.com/JDDev0/EnergizedPower-Croptopia/issues",
+		"email": "jddev0@dorneger.at"
+	},
+	"license": "MIT",
+	"icon": "assets/energizedpowerct/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-datagen": [
+			"me.jddev0.epct.datagen.EnergizedPowerCTDataGenerators"
+		],
+		"main": [
+			"me.jddev0.epct.EnergizedPowerCTMod"
+		],
+		"client": [
+			"me.jddev0.epct.EnergizedPowerCTModClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.0",
+		"minecraft": "~26.1",
+		"java": ">=25",
+		"fabric-api": "*",
+
+		"energizedpower": "*",
+
+		"croptopia": "*"
+	},
+	"suggests": {
+		"emi": "*",
+		"jei": "*",
+		"rei": "*"
+	}
+}

@@ -15,18 +15,17 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.common.conditions.NeoForgeConditions;
 
 public class ModRecipeGenerator extends RecipeProvider {
     private static final String CROPTOPIA_MOD_ID = MiscNames.MOD_ID;
     private static final String PATH_PREFIX = "compat/" + CROPTOPIA_MOD_ID + "/";
 
-    public ModRecipeGenerator(HolderLookup.Provider registries, RecipeOutput recipeOutput) {
-        super(registries, recipeOutput);
+    public ModRecipeGenerator(HolderLookup.Provider registries, RecipeOutput exporter) {
+        super(registries, exporter);
     }
 
     @Override
-    protected void buildRecipes() {
+    public void buildRecipes() {
         buildPulverizerRecipes(output);
         buildPlantGrowthChamberRecipes(output);
     }
@@ -116,7 +115,7 @@ public class ModRecipeGenerator extends RecipeProvider {
                 getItemName(output.output().item().value()) + "_from_pulverizing_" + recipeIngredientName);
 
         PulverizerRecipe recipe = new PulverizerRecipe(output, secondaryOutput, input);
-        recipeOutput.accept(getKey(recipeId), recipe, null, NeoForgeConditions.modLoaded(CROPTOPIA_MOD_ID));
+        recipeOutput.accept(getKey(recipeId), recipe, null);
     }
 
     private void addBasicCropGrowingRecipeNoSeeds(RecipeOutput recipeOutput, FarmlandCrop farmlandCrop) {
@@ -133,7 +132,7 @@ public class ModRecipeGenerator extends RecipeProvider {
                 outputName + "_from_growing_" + recipeIngredientName);
 
         PlantGrowthChamberRecipe recipe = new PlantGrowthChamberRecipe(outputs, input, ticks);
-        recipeOutput.accept(getKey(recipeId), recipe, null, NeoForgeConditions.modLoaded(CROPTOPIA_MOD_ID));
+        recipeOutput.accept(getKey(recipeId), recipe, null);
     }
 
     private Ingredient ingredientOf(ItemLike item) {
