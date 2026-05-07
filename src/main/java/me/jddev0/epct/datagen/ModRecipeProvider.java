@@ -3,37 +3,37 @@ package me.jddev0.epct.datagen;
 import com.epherical.croptopia.common.MiscNames;
 import com.epherical.croptopia.register.Content;
 import com.epherical.croptopia.register.helpers.FarmlandCrop;
+import me.jddev0.ep.datagen.recipe.PlantGrowthChamberFinishedRecipe;
+import me.jddev0.ep.datagen.recipe.PulverizerFinishedRecipe;
 import me.jddev0.ep.recipe.OutputItemStackWithPercentages;
-import me.jddev0.ep.recipe.PlantGrowthChamberRecipe;
 import me.jddev0.ep.recipe.PulverizerRecipe;
 import me.jddev0.epct.EnergizedPowerCTMod;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.common.conditions.IConditionBuilder;
+import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     private static final String CROPTOPIA_MOD_ID = MiscNames.MOD_ID;
     private static final String PATH_PREFIX = "compat/" + CROPTOPIA_MOD_ID + "/";
 
-    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(output, lookupProvider);
+    public ModRecipeProvider(PackOutput output) {
+        super(output);
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput output) {
+    protected void buildRecipes(Consumer<FinishedRecipe> output) {
         buildPulverizerRecipes(output);
         buildPlantGrowthChamberRecipes(output);
     }
 
-    private void buildPulverizerRecipes(RecipeOutput output) {
+    private void buildPulverizerRecipes(Consumer<FinishedRecipe> output) {
         addPulverizerRecipe(output, ingredientOf(Content.SALT_ORE),
                 new PulverizerRecipe.OutputItemStackWithPercentages(new ItemStack(Content.SALT), new double[] {
                         1., 1., 1., 1., .5, .5
@@ -43,7 +43,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 "salt_ore");
     }
 
-    private void buildPlantGrowthChamberRecipes(RecipeOutput output) {
+    private void buildPlantGrowthChamberRecipes(Consumer<FinishedRecipe> output) {
         addBasicCropGrowingRecipeNoSeeds(output, Content.ARTICHOKE);
         addBasicCropGrowingRecipeNoSeeds(output, Content.ASPARAGUS);
         addBasicCropGrowingRecipeNoSeeds(output, Content.BARLEY);
@@ -104,38 +104,44 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         addBasicCropGrowingRecipeNoSeeds(output, Content.ZUCCHINI);
     }
 
-    private void addPulverizerRecipe(RecipeOutput recipeOutput, Ingredient input,
+    private void addPulverizerRecipe(Consumer<FinishedRecipe> recipeOutput, Ingredient input,
                                      PulverizerRecipe.OutputItemStackWithPercentages output,
                                      String recipeIngredientName) {
         addPulverizerRecipe(recipeOutput, input, output,
                 new PulverizerRecipe.OutputItemStackWithPercentages(ItemStack.EMPTY, new double[0], new double[0]), recipeIngredientName);
     }
-    private void addPulverizerRecipe(RecipeOutput recipeOutput, Ingredient input,
+    private void addPulverizerRecipe(Consumer<FinishedRecipe> recipeOutput, Ingredient input,
                                      PulverizerRecipe.OutputItemStackWithPercentages output,
                                      PulverizerRecipe.OutputItemStackWithPercentages secondaryOutput,
                                      String recipeIngredientName) {
-        ResourceLocation recipeId = ResourceLocation.fromNamespaceAndPath(EnergizedPowerCTMod.MODID, PATH_PREFIX + "pulverizer/" +
+        ResourceLocation recipeId = new ResourceLocation(EnergizedPowerCTMod.MODID, PATH_PREFIX + "pulverizer/" +
                 getItemName(output.output().getItem()) + "_from_pulverizing_" + recipeIngredientName);
 
-        PulverizerRecipe recipe = new PulverizerRecipe(output, secondaryOutput, input);
-        recipeOutput.accept(recipeId, recipe, null, modLoaded(CROPTOPIA_MOD_ID));
+        PulverizerFinishedRecipe recipe = new PulverizerFinishedRecipe(
+                recipeId,
+                output, secondaryOutput, input
+        );
+        recipeOutput.accept(recipe);
     }
 
-    private void addBasicCropGrowingRecipeNoSeeds(RecipeOutput recipeOutput, FarmlandCrop farmlandCrop) {
+    private void addBasicCropGrowingRecipeNoSeeds(Consumer<FinishedRecipe> recipeOutput, FarmlandCrop farmlandCrop) {
         addPlantGrowthChamberRecipe(recipeOutput, ingredientOf(farmlandCrop.getSeedItem()), new OutputItemStackWithPercentages[] {
                 new OutputItemStackWithPercentages(new ItemStack(farmlandCrop.asItem()), new double[] {
                         1., .75, .25, .25
                 }),
         }, 16000, getItemName(farmlandCrop.asItem()), getItemName(farmlandCrop.getSeedItem()));
     }
-    private void addPlantGrowthChamberRecipe(RecipeOutput recipeOutput, Ingredient input,
+    private void addPlantGrowthChamberRecipe(Consumer<FinishedRecipe> recipeOutput, Ingredient input,
                                              OutputItemStackWithPercentages[] outputs, int ticks,
                                              String outputName, String recipeIngredientName) {
-        ResourceLocation recipeId = ResourceLocation.fromNamespaceAndPath(EnergizedPowerCTMod.MODID, PATH_PREFIX + "growing/" +
+        ResourceLocation recipeId = new ResourceLocation(EnergizedPowerCTMod.MODID, PATH_PREFIX + "growing/" +
                 outputName + "_from_growing_" + recipeIngredientName);
 
-        PlantGrowthChamberRecipe recipe = new PlantGrowthChamberRecipe(outputs, input, ticks);
-        recipeOutput.accept(recipeId, recipe, null, modLoaded(CROPTOPIA_MOD_ID));
+        PlantGrowthChamberFinishedRecipe recipe = new PlantGrowthChamberFinishedRecipe(
+                recipeId,
+                outputs, input, ticks
+        );
+        recipeOutput.accept(recipe);
     }
 
     private Ingredient ingredientOf(ItemLike item) {
