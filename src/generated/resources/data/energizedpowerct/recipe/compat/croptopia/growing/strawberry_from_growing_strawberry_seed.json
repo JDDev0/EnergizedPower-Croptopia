@@ -1,17 +1,19 @@
 {
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:strawberry_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:strawberry_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:strawberry"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:strawberry"
-      }
+      ]
     }
   ],
   "ticks": 16000

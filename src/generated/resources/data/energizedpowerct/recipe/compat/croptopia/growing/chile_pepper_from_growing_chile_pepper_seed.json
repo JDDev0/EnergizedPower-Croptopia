@@ -1,17 +1,19 @@
 {
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:chile_pepper_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:chile_pepper_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:chile_pepper"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:chile_pepper"
-      }
+      ]
     }
   ],
   "ticks": 16000

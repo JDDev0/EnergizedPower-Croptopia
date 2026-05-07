@@ -1,17 +1,19 @@
 {
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:raspberry_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:raspberry_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:raspberry"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:raspberry"
-      }
+      ]
     }
   ],
   "ticks": 16000

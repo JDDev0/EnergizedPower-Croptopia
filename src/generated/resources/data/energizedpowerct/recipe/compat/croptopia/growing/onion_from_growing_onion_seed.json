@@ -1,17 +1,19 @@
 {
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:onion_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:onion_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:onion"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:onion"
-      }
+      ]
     }
   ],
   "ticks": 16000

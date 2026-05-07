@@ -1,17 +1,19 @@
 {
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:coffee_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:coffee_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:coffee_beans"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:coffee_beans"
-      }
+      ]
     }
   ],
   "ticks": 16000

@@ -1,5 +1,5 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
     id "me.shedaniel.unified-publishing" version "0.1.+"
 }
@@ -52,8 +52,6 @@ repositories {
 
 fabricApi {
     configureDataGeneration {
-        setClient(true)
-
         getOutputDirectory().set(getProject().file("src/generated/resources"))
 
         setModId(project.modid)
@@ -65,10 +63,11 @@ fabricApi {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // Uncomment the following line to enable the deprecated Fabric API modules.
     // These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
@@ -76,28 +75,25 @@ dependencies {
     // modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
     // Team Reborn: Fabric energy
-    include api('teamreborn:energy:5.0.0') {
+    include modApi('teamreborn:energy:4.1.0') {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
     // Energized Power dependency
-    compileOnlyApi "curse.maven:energized-power-782147:8000981"
+    modCompileOnly "curse.maven:energized-power-782147:8022731"
 
-    localRuntime "curse.maven:energized-power-782147:8000981"
+    modLocalRuntime "curse.maven:energized-power-782147:8022731"
 
     // Croptopia
-    compileOnly "curse.maven:croptopia-415438:7969925"
+    modCompileOnly "curse.maven:croptopia-415438:7958878"
 
-    localRuntime "curse.maven:croptopia-415438:7969925"
-    localRuntime "curse.maven:epherolib-885449:7937978"
+    modLocalRuntime "curse.maven:croptopia-415438:7958878"
+    modLocalRuntime "curse.maven:epherolib-885449:6379763"
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    localRuntime "mezz.jei:jei-26.1-fabric:29.2.0.20"
-    //localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:20.0.811"
-    //localRuntime "dev.emi:emi-neoforge:1.1.18+1.21.1"
-    localRuntime "curse.maven:advanced-loot-info-1205426:8006705"
+    modLocalRuntime "dev.emi:emi-fabric:1.1.13+1.21.1"
 }
 
 processResources {
@@ -109,7 +105,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 25
+    it.options.release = 21
 }
 
 java {
@@ -118,8 +114,8 @@ java {
     // If you remove this line, sources will not be generated.
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
@@ -156,7 +152,7 @@ publishing {
 tasks.register("distJar", Copy) {
     group = "build"
 
-    dependsOn(tasks.getByName("jar"))
+    dependsOn(tasks.getByName("remapJar"))
 
     var jarFile = project.rootDir.toPath().resolve("build/libs").resolve(project.archives_base_name + "-" + project.version + ".jar").toFile()
     from(jarFile)
@@ -167,16 +163,16 @@ tasks.register("distJar", Copy) {
 }
 
 tasks.publishUnified {
-    dependsOn tasks.getByName("distJar")
+    dependsOn distJar
 }
 
 unifiedPublishing {
     project {
-        displayName = "Energized Power - CT - " + "26.1.x" + " - v" + project.mod_version.split("-")[1] + " [Fabric]"
+        displayName = "Energized Power - CT - " + project.minecraft_version + " - v" + project.mod_version.split("-")[1] + " [Fabric]"
         version = project.mod_version
         changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
         releaseType = "release"
-        gameVersions = ["26.1", "26.1.1", "26.1.2"]
+        gameVersions = [project.minecraft_version]
         gameLoaders = ["fabric"]
 
         mainPublication.set(project.rootDir.toPath().resolve("build/libs").resolve(project.archives_base_name + "-" + project.version + ".jar").toFile())

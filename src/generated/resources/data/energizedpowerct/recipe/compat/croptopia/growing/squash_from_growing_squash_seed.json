@@ -1,17 +1,19 @@
 {
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:squash_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:squash_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:squash"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:squash"
-      }
+      ]
     }
   ],
   "ticks": 16000
