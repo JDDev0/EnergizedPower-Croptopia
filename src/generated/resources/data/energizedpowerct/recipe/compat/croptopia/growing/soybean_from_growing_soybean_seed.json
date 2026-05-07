@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "croptopia"
+    }
+  ],
+  "type": "energizedpower:plant_growth_chamber",
+  "ingredient": "croptopia:soybean_seed",
+  "results": [
+    {
+      "percentages": [
+        1.0,
+        0.75,
+        0.25,
+        0.25
+      ],
+      "result": {
+        "id": "croptopia:soybean"
+      }
+    }
+  ],
+  "ticks": 16000
+}
