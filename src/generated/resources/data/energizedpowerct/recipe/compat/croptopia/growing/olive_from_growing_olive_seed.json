@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:olive_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:olive_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:olive"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:olive"
-      }
+      ]
     }
   ],
   "ticks": 16000

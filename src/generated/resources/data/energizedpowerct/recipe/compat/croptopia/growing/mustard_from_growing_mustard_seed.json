@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:mustard_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:mustard_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:mustard"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:mustard"
-      }
+      ]
     }
   ],
   "ticks": 16000

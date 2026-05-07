@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:blueberry_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:blueberry_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:blueberry"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:blueberry"
-      }
+      ]
     }
   ],
   "ticks": 16000

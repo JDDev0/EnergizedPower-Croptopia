@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:sweetpotato_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:sweetpotato_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:sweetpotato"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:sweetpotato"
-      }
+      ]
     }
   ],
   "ticks": 16000

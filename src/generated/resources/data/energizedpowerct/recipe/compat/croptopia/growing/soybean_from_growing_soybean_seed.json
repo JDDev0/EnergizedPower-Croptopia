@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:soybean_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:soybean_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:soybean"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:soybean"
-      }
+      ]
     }
   ],
   "ticks": 16000

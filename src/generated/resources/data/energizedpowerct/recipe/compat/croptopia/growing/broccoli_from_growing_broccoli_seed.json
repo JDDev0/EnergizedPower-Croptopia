@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:broccoli_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:broccoli_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:broccoli"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:broccoli"
-      }
+      ]
     }
   ],
   "ticks": 16000

@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:cabbage_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:cabbage_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:cabbage"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:cabbage"
-      }
+      ]
     }
   ],
   "ticks": 16000

@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:barley_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:barley_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:barley"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:barley"
-      }
+      ]
     }
   ],
   "ticks": 16000

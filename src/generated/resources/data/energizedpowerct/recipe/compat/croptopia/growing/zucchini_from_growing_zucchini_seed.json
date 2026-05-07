@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:zucchini_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:zucchini_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:zucchini"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:zucchini"
-      }
+      ]
     }
   ],
   "ticks": 16000

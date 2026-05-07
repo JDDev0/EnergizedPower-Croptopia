@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:eggplant_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:eggplant_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:eggplant"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:eggplant"
-      }
+      ]
     }
   ],
   "ticks": 16000

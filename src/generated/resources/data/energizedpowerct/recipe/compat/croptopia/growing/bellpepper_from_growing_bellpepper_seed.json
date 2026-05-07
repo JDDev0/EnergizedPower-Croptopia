@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:bellpepper_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:bellpepper_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:bellpepper"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:bellpepper"
-      }
+      ]
     }
   ],
   "ticks": 16000

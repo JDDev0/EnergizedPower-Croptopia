@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:pineapple_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:pineapple_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:pineapple"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:pineapple"
-      }
+      ]
     }
   ],
   "ticks": 16000

@@ -6,18 +6,20 @@
     }
   ],
   "type": "energizedpower:plant_growth_chamber",
-  "ingredient": "croptopia:tea_seed",
-  "results": [
+  "ingredient": {
+    "item": "croptopia:tea_seed"
+  },
+  "outputs": [
     {
+      "output": {
+        "item": "croptopia:tea_leaves"
+      },
       "percentages": [
         1.0,
         0.75,
         0.25,
         0.25
-      ],
-      "result": {
-        "id": "croptopia:tea_leaves"
-      }
+      ]
     }
   ],
   "ticks": 16000
