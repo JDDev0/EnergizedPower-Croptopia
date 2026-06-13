@@ -4,6 +4,8 @@ import com.epherical.croptopia.common.MiscNames;
 import com.epherical.croptopia.register.Content;
 import com.epherical.croptopia.register.helpers.FarmlandCrop;
 import me.jddev0.ep.recipe.*;
+import me.jddev0.ep.soil.EPSoilTypeTags;
+import me.jddev0.ep.soil.SoilType;
 import me.jddev0.epct.EnergizedPowerCTMod;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -11,10 +13,14 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 
 public class ModRecipeGenerator extends RecipeProvider {
     private static final String CROPTOPIA_MOD_ID = MiscNames.MOD_ID;
@@ -41,64 +47,64 @@ public class ModRecipeGenerator extends RecipeProvider {
     }
 
     private void buildPlantGrowthChamberRecipes(RecipeOutput output) {
-        addBasicCropGrowingRecipeNoSeeds(output, Content.ARTICHOKE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.ASPARAGUS);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.BARLEY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.BASIL);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.BELLPEPPER);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.BLACKBEAN);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.BLACKBERRY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.BLUEBERRY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.BROCCOLI);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CABBAGE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CANTALOUPE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CAULIFLOWER);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CELERY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CHILE_PEPPER);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.COFFEE_BEANS);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CORN);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CRANBERRY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CUCUMBER);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.CURRANT);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.EGGPLANT);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.ELDERBERRY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.GARLIC);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.GINGER);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.GRAPE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.GREENBEAN);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.GREENONION);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.HONEYDEW);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.HOPS);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.KALE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.KIWI);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.LEEK);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.LETTUCE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.MUSTARD);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.OAT);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.OLIVE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.ONION);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.PEANUT);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.PEPPER);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.PINEAPPLE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.RADISH);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.RASPBERRY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.RHUBARB);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.RICE);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.RUTABAGA);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.SAGUARO);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.SOYBEAN);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.SPINACH);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.SQUASH);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.STRAWBERRY);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.SWEETPOTATO);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.TEA_LEAVES);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.TOMATILLO);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.TOMATO);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.TURMERIC);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.TURNIP);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.VANILLA);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.YAM);
-        addBasicCropGrowingRecipeNoSeeds(output, Content.ZUCCHINI);
+        addBasicCropGrowingRecipeNoSeeds(Content.ARTICHOKE);
+        addBasicCropGrowingRecipeNoSeeds(Content.ASPARAGUS);
+        addBasicCropGrowingRecipeNoSeeds(Content.BARLEY);
+        addBasicCropGrowingRecipeNoSeeds(Content.BASIL);
+        addBasicCropGrowingRecipeNoSeeds(Content.BELLPEPPER);
+        addBasicCropGrowingRecipeNoSeeds(Content.BLACKBEAN);
+        addBasicCropGrowingRecipeNoSeeds(Content.BLACKBERRY);
+        addBasicCropGrowingRecipeNoSeeds(Content.BLUEBERRY);
+        addBasicCropGrowingRecipeNoSeeds(Content.BROCCOLI);
+        addBasicCropGrowingRecipeNoSeeds(Content.CABBAGE);
+        addBasicCropGrowingRecipeNoSeeds(Content.CANTALOUPE);
+        addBasicCropGrowingRecipeNoSeeds(Content.CAULIFLOWER);
+        addBasicCropGrowingRecipeNoSeeds(Content.CELERY);
+        addBasicCropGrowingRecipeNoSeeds(Content.CHILE_PEPPER);
+        addBasicCropGrowingRecipeNoSeeds(Content.COFFEE_BEANS);
+        addBasicCropGrowingRecipeNoSeeds(Content.CORN);
+        addBasicCropGrowingRecipeNoSeeds(Content.CRANBERRY);
+        addBasicCropGrowingRecipeNoSeeds(Content.CUCUMBER);
+        addBasicCropGrowingRecipeNoSeeds(Content.CURRANT);
+        addBasicCropGrowingRecipeNoSeeds(Content.EGGPLANT);
+        addBasicCropGrowingRecipeNoSeeds(Content.ELDERBERRY);
+        addBasicCropGrowingRecipeNoSeeds(Content.GARLIC);
+        addBasicCropGrowingRecipeNoSeeds(Content.GINGER);
+        addBasicCropGrowingRecipeNoSeeds(Content.GRAPE);
+        addBasicCropGrowingRecipeNoSeeds(Content.GREENBEAN);
+        addBasicCropGrowingRecipeNoSeeds(Content.GREENONION);
+        addBasicCropGrowingRecipeNoSeeds(Content.HONEYDEW);
+        addBasicCropGrowingRecipeNoSeeds(Content.HOPS);
+        addBasicCropGrowingRecipeNoSeeds(Content.KALE);
+        addBasicCropGrowingRecipeNoSeeds(Content.KIWI);
+        addBasicCropGrowingRecipeNoSeeds(Content.LEEK);
+        addBasicCropGrowingRecipeNoSeeds(Content.LETTUCE);
+        addBasicCropGrowingRecipeNoSeeds(Content.MUSTARD);
+        addBasicCropGrowingRecipeNoSeeds(Content.OAT);
+        addBasicCropGrowingRecipeNoSeeds(Content.OLIVE);
+        addBasicCropGrowingRecipeNoSeeds(Content.ONION);
+        addBasicCropGrowingRecipeNoSeeds(Content.PEANUT);
+        addBasicCropGrowingRecipeNoSeeds(Content.PEPPER);
+        addBasicCropGrowingRecipeNoSeeds(Content.PINEAPPLE);
+        addBasicCropGrowingRecipeNoSeeds(Content.RADISH);
+        addBasicCropGrowingRecipeNoSeeds(Content.RASPBERRY);
+        addBasicCropGrowingRecipeNoSeeds(Content.RHUBARB);
+        addBasicCropGrowingRecipeNoSeeds(Content.RICE);
+        addBasicCropGrowingRecipeNoSeeds(Content.RUTABAGA);
+        addBasicCropGrowingRecipeNoSeeds(Content.SAGUARO);
+        addBasicCropGrowingRecipeNoSeeds(Content.SOYBEAN);
+        addBasicCropGrowingRecipeNoSeeds(Content.SPINACH);
+        addBasicCropGrowingRecipeNoSeeds(Content.SQUASH);
+        addBasicCropGrowingRecipeNoSeeds(Content.STRAWBERRY);
+        addBasicCropGrowingRecipeNoSeeds(Content.SWEETPOTATO);
+        addBasicCropGrowingRecipeNoSeeds(Content.TEA_LEAVES);
+        addBasicCropGrowingRecipeNoSeeds(Content.TOMATILLO);
+        addBasicCropGrowingRecipeNoSeeds(Content.TOMATO);
+        addBasicCropGrowingRecipeNoSeeds(Content.TURMERIC);
+        addBasicCropGrowingRecipeNoSeeds(Content.TURNIP);
+        addBasicCropGrowingRecipeNoSeeds(Content.VANILLA);
+        addBasicCropGrowingRecipeNoSeeds(Content.YAM);
+        addBasicCropGrowingRecipeNoSeeds(Content.ZUCCHINI);
     }
 
     private void addPulverizerRecipe(RecipeOutput recipeOutput, Ingredient input,
@@ -118,25 +124,42 @@ public class ModRecipeGenerator extends RecipeProvider {
         recipeOutput.accept(getKey(recipeId), recipe, null);
     }
 
-    private void addBasicCropGrowingRecipeNoSeeds(RecipeOutput recipeOutput, FarmlandCrop farmlandCrop) {
-        addPlantGrowthChamberRecipe(recipeOutput, ingredientOf(farmlandCrop.getSeedItem()), new OutputItemStackTemplateWithPercentages[] {
+    private void addBasicCropGrowingRecipeNoSeeds(FarmlandCrop farmlandCrop) {
+        addPlantGrowthChamberRecipe(ingredientOf(farmlandCrop.getSeedItem()), new OutputItemStackTemplateWithPercentages[] {
                 new OutputItemStackTemplateWithPercentages(new ItemStackTemplate(farmlandCrop.asItem()), new double[] {
                         1., .75, .25, .25
                 }),
-        }, 16000, getItemName(farmlandCrop.asItem()), getItemName(farmlandCrop.getSeedItem()));
+        }, EPSoilTypeTags.CROPS, Fluids.WATER, 0.0625, 4000, getItemName(farmlandCrop.asItem()), getItemName(farmlandCrop.getSeedItem()));
     }
-    private void addPlantGrowthChamberRecipe(RecipeOutput recipeOutput, Ingredient input,
-                                             OutputItemStackTemplateWithPercentages[] outputs, int ticks,
+    private void addPlantGrowthChamberRecipe(Ingredient input,
+                                             OutputItemStackTemplateWithPercentages[] outputs,
+                                             TagKey<SoilType> soilType,
+                                             Fluid fluid, double fluidConsumption, int ticks,
+                                             String outputName, String recipeIngredientName) {
+        addPlantGrowthChamberRecipe(input, outputs, soilType, new Fluid[] {fluid}, fluidConsumption, ticks, outputName, recipeIngredientName);
+    }
+    private void addPlantGrowthChamberRecipe(Ingredient input,
+                                             OutputItemStackTemplateWithPercentages[] outputs,
+                                             TagKey<SoilType> soilType,
+                                             Fluid[] fluid, double fluidConsumption, int ticks,
                                              String outputName, String recipeIngredientName) {
         Identifier recipeId = Identifier.fromNamespaceAndPath(EnergizedPowerCTMod.MODID, PATH_PREFIX + "growing/" +
                 outputName + "_from_growing_" + recipeIngredientName);
 
-        PlantGrowthChamberRecipe recipe = new PlantGrowthChamberRecipe(outputs, input, ticks);
-        recipeOutput.accept(getKey(recipeId), recipe, null);
+        PlantGrowthChamberRecipe recipe = new PlantGrowthChamberRecipe(outputs, input, soilType, fluid, fluidConsumption, ticks);
+        this.output.accept(getKey(recipeId), recipe, null);
     }
 
     private Ingredient ingredientOf(ItemLike item) {
         return Ingredient.of(item);
+    }
+
+    private Ingredient ingredientOf(ItemLike... items) {
+        return Ingredient.of(items);
+    }
+
+    private Ingredient ingredientOf(TagKey<Item> tagKey) {
+        return Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(tagKey));
     }
 
     private static ResourceKey<Recipe<?>> getKey(Identifier recipeId) {
