@@ -4,7 +4,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.165'
-    id "me.shedaniel.unified-publishing" version "0.1.+"
+    id "me.modmuss50.mod-publish-plugin" version "2.0.0-beta.2"
 }
 
 version = mod_version
@@ -149,9 +149,9 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
     // Energized Power dependency
-    compileOnly "curse.maven:energized-power-782147:8022782"
+    compileOnly "curse.maven:energized-power-782147:8238851"
 
-    localRuntime "curse.maven:energized-power-782147:8022782"
+    localRuntime "curse.maven:energized-power-782147:8238851"
 
     // Croptopia
     compileOnly "curse.maven:croptopia-415438:7958876"
@@ -221,42 +221,30 @@ publishing {
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
+publishMods {
+    displayName = "Energized Power - CT - " + "1.21.1" + " - v" + project.mod_version.split("\\+")[0] + " [NeoForge]"
+    changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
+    type = BETA //TODO change to STABLE if v3.0.0 is no longer in beta
+    file = jar.archiveFile
+    modLoaders.add("neoforge")
 
-tasks.publishUnified {
-    dependsOn tasks.getByName("build")
-}
+    dryRun = project.mod_version.contains("dev")
 
-unifiedPublishing {
-    project {
-        displayName = "Energized Power - CT - " + project.minecraft_version + " - v" + project.mod_version.split("-")[1] + " [NeoForge]"
-        version = project.mod_version
-        changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
-        releaseType = "release"
-        gameVersions = [project.minecraft_version]
-        gameLoaders = ["neoforge"]
-
-        mainPublication.set(project.rootDir.toPath().resolve("build/libs").resolve(project.mod_id + "-" + project.version + ".jar").toFile())
-
-        relations {
-            depends {
-                curseforge = "energized-power"
-            }
-
-            depends {
-                curseforge = "croptopia"
-            }
-        }
-
-        if(project.hasProperty('CURSEFORGE_TOKEN')) {
-            curseforge {
-                token = getProperty('CURSEFORGE_TOKEN') as String
-                id = "1536638"
-            }
+    if(project.hasProperty('CURSEFORGE_TOKEN')) {
+        curseforge {
+            accessToken = getProperty('CURSEFORGE_TOKEN') as String
+            projectId = "1536638"
+            minecraftVersionList("1.21.1")
+            requires("energized-power", "croptopia")
+            client = true
+            server = true
+            javaVersions.add(JavaVersion.VERSION_21)
         }
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
