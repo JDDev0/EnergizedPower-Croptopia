@@ -1,7 +1,7 @@
 plugins {
     id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
-    id "me.shedaniel.unified-publishing" version "0.1.+"
+    id "me.modmuss50.mod-publish-plugin" version "2.0.0-beta.2"
 }
 
 version = project.mod_version
@@ -80,9 +80,9 @@ dependencies {
     }
 
     // Energized Power dependency
-    modCompileOnly "curse.maven:energized-power-782147:8022731"
+    modCompileOnly "curse.maven:energized-power-782147:8238845"
 
-    modLocalRuntime "curse.maven:energized-power-782147:8022731"
+    modLocalRuntime "curse.maven:energized-power-782147:8238845"
 
     // Croptopia
     modCompileOnly "curse.maven:croptopia-415438:7958878"
@@ -149,53 +149,24 @@ publishing {
     }
 }
 
-tasks.register("distJar", Copy) {
-    group = "build"
+publishMods {
+    displayName = "Energized Power - CT - " + "1.21.1" + " - v" + project.mod_version.split("\\+")[0] + " [Fabric]"
+    changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
+    type = BETA //TODO change to STABLE if v3.0.0 is no longer in beta
+    file = remapJar.archiveFile
+    modLoaders.add("fabric")
 
-    dependsOn(tasks.getByName("remapJar"))
+    dryRun = project.mod_version.contains("dev")
 
-    var jarFile = project.rootDir.toPath().resolve("build/libs").resolve(project.archives_base_name + "-" + project.version + ".jar").toFile()
-    from(jarFile)
-    doFirst {
-        file(project.rootDir.toPath().resolve("build/libs/dist")).mkdirs()
-    }
-    into(project.rootDir.toPath().resolve("build/libs/dist"))
-}
-
-tasks.publishUnified {
-    dependsOn distJar
-}
-
-unifiedPublishing {
-    project {
-        displayName = "Energized Power - CT - " + project.minecraft_version + " - v" + project.mod_version.split("-")[1] + " [Fabric]"
-        version = project.mod_version
-        changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
-        releaseType = "release"
-        gameVersions = [project.minecraft_version]
-        gameLoaders = ["fabric"]
-
-        mainPublication.set(project.rootDir.toPath().resolve("build/libs").resolve(project.archives_base_name + "-" + project.version + ".jar").toFile())
-
-        relations {
-            depends {
-                curseforge = "fabric-api"
-            }
-
-            depends {
-                curseforge = "energized-power"
-            }
-
-            depends {
-                curseforge = "croptopia"
-            }
-        }
-
-        if(project.hasProperty('CURSEFORGE_TOKEN')) {
-            curseforge {
-                token = getProperty('CURSEFORGE_TOKEN') as String
-                id = "1536638"
-            }
+    if(project.hasProperty('CURSEFORGE_TOKEN')) {
+        curseforge {
+            accessToken = getProperty('CURSEFORGE_TOKEN') as String
+            projectId = "1536638"
+            minecraftVersionList("1.21.1")
+            requires("fabric-api", "energized-power", "croptopia")
+            client = true
+            server = true
+            javaVersions.add(JavaVersion.VERSION_21)
         }
     }
 }
