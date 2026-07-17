@@ -4,7 +4,7 @@ Download on CurseForge: [Energized Power - Croptopia](https://www.curseforge.com
 
 ## Information
 
-**This mod requires [Energized Power](https://github.com/JDDev0/EnergizedPower) and [Croptopia](https://github.com/ExcessiveAmountsOfZombies/Croptopia/issues)**
+**This mod requires [Energized Power](https://github.com/JDDev0/EnergizedPower) and [Croptopia](https://github.com/ExcessiveAmountsOfZombies/Croptopia)**
 
 **The fabric edition of this mod requires the Fabric API.**
 
