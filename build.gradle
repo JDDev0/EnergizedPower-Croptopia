@@ -149,9 +149,9 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
     // Energized Power dependency
-    compileOnly "curse.maven:energized-power-782147:8238859"
+    compileOnly "curse.maven:energized-power-782147:8610545"
 
-    localRuntime "curse.maven:energized-power-782147:8238859"
+    localRuntime "curse.maven:energized-power-782147:8610545"
 
     // Croptopia
     compileOnly "curse.maven:croptopia-415438:7969924"
@@ -229,7 +229,7 @@ tasks.withType(JavaCompile).configureEach {
 publishMods {
     displayName = "Energized Power - CT - " + "26.1.x" + " - v" + project.mod_version.split("\\+")[0] + " [NeoForge]"
     changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
-    type = BETA //TODO change to STABLE if v3.0.0 is no longer in beta
+    type = STABLE
     file = jar.archiveFile
     modLoaders.add("neoforge")
 
