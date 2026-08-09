@@ -3,9 +3,7 @@ package me.jddev0.epct.datagen;
 import com.epherical.croptopia.common.MiscNames;
 import com.epherical.croptopia.register.Content;
 import com.epherical.croptopia.register.helpers.FarmlandCrop;
-import me.jddev0.ep.recipe.OutputItemStackWithPercentages;
-import me.jddev0.ep.recipe.PlantGrowthChamberRecipe;
-import me.jddev0.ep.recipe.PulverizerRecipe;
+import me.jddev0.ep.recipe.*;
 import me.jddev0.ep.soil.EPSoilTypeTags;
 import me.jddev0.ep.soil.SoilType;
 import me.jddev0.epct.EnergizedPowerCTMod;
@@ -149,7 +147,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ResourceLocation recipeId = ResourceLocation.fromNamespaceAndPath(EnergizedPowerCTMod.MODID, PATH_PREFIX + "growing/" +
                 outputName + "_from_growing_" + recipeIngredientName);
 
-        PlantGrowthChamberRecipe recipe = new PlantGrowthChamberRecipe(outputs, input, soilType, fluid, fluidConsumption, ticks);
+        PlantGrowthChamberRecipe recipe = new PlantGrowthChamberRecipe(outputs, input, SoilTypeIngredient.of(soilType), FluidIngredient.of(fluid), fluidConsumption, ticks);
         recipeExporter.accept(recipeId, recipe, null);
     }
 
