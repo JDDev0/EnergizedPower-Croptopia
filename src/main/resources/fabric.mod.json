@@ -33,7 +33,7 @@
 		"java": ">=21",
 		"fabric-api": "*",
 
-		"energizedpower": ">=3.0.0-beta.2",
+		"energizedpower": ">=3.0.0",
 
 		"croptopia": "*"
 	},
