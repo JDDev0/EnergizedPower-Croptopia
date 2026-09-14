@@ -1,5 +1,5 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom' version '1.17-SNAPSHOT'
     id 'maven-publish'
     id "me.modmuss50.mod-publish-plugin" version "2.0.0-beta.2"
 }
@@ -81,23 +81,23 @@ dependencies {
     }
 
     // Energized Power dependency
-    compileOnlyApi "curse.maven:energized-power-782147:8610442"
+    compileOnlyApi "curse.maven:energized-power-782147:8610482"
 
-    localRuntime "curse.maven:energized-power-782147:8610442"
+    localRuntime "curse.maven:energized-power-782147:8610482"
 
     // Croptopia
-    compileOnly "curse.maven:croptopia-415438:7969925"
+    compileOnly "curse.maven:croptopia-415438:8544537"
 
-    localRuntime "curse.maven:croptopia-415438:7969925"
-    localRuntime "curse.maven:epherolib-885449:7937978"
+    localRuntime "curse.maven:croptopia-415438:8544537"
+    localRuntime "curse.maven:epherolib-885449:8544496"
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    localRuntime "mezz.jei:jei-26.1-fabric:29.2.0.20"
+    localRuntime "mezz.jei:jei-26.2-fabric:30.0.0.1"
     //localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:20.0.811"
     //localRuntime "dev.emi:emi-neoforge:1.1.18+1.21.1"
-    localRuntime "curse.maven:advanced-loot-info-1205426:8006705"
+    //localRuntime "curse.maven:advanced-loot-info-1205426:8006705"
 }
 
 processResources {
@@ -154,7 +154,7 @@ publishing {
 }
 
 publishMods {
-    displayName = "Energized Power - CT - " + "26.1.x" + " - v" + project.mod_version.split("\\+")[0] + " [Fabric]"
+    displayName = "Energized Power - CT - " + "26.2.x" + " - v" + project.mod_version.split("\\+")[0] + " [Fabric]"
     changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
     type = STABLE
     file = jar.archiveFile
@@ -166,7 +166,7 @@ publishMods {
         curseforge {
             accessToken = getProperty('CURSEFORGE_TOKEN') as String
             projectId = "1536638"
-            minecraftVersionList("26.1, 26.1.1, 26.1.2")
+            minecraftVersionList("26.2")
             requires("fabric-api", "energized-power", "croptopia")
             client = true
             server = true
