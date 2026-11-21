@@ -7,10 +7,12 @@ import me.jddev0.ep.recipe.*;
 import me.jddev0.ep.soil.EPSoilTypeTags;
 import me.jddev0.ep.soil.SoilType;
 import me.jddev0.epct.EnergizedPowerCTMod;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -27,12 +29,12 @@ public class ModRecipeGenerator extends RecipeProvider {
     private static final String CROPTOPIA_MOD_ID = MiscNames.MOD_ID;
     private static final String PATH_PREFIX = "compat/" + CROPTOPIA_MOD_ID + "/";
 
-    public ModRecipeGenerator(HolderLookup.Provider registries, RecipeOutput recipeOutput) {
-        super(registries, recipeOutput);
+    public ModRecipeGenerator(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+        super(recipeOutput, advancementOutput);
     }
 
     @Override
-    protected void buildRecipes() {
+    public void buildRecipes() {
         buildPulverizerRecipes(output);
         buildPlantGrowthChamberRecipes(output);
     }
@@ -160,7 +162,7 @@ public class ModRecipeGenerator extends RecipeProvider {
     }
 
     private Ingredient ingredientOf(TagKey<Item> tagKey) {
-        return Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(tagKey));
+        return Ingredient.of(output.lookup(Registries.ITEM).getOrThrow(tagKey));
     }
 
     private static ResourceKey<Recipe<?>> getKey(Identifier recipeId) {

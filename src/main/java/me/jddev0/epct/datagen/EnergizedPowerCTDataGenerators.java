@@ -17,8 +17,9 @@ public class EnergizedPowerCTDataGenerators {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
 
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getWorldLookupProvider();
 
-        generator.addProvider(true, new ModRecipeProvider(output, lookupProvider));
+        generator.addProvider(true, ModReloadableRegistriesProvider.create(output, event.getWorldLookupProvider(),
+                event.getReloadableLookupProvider()));
     }
 }

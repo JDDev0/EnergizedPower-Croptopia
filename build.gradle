@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.1.38'
+    id 'net.neoforged.gradle.userdev' version '7.1.39'
     id "me.modmuss50.mod-publish-plugin" version "2.0.0-beta.2"
 }
 
@@ -149,20 +149,20 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
     // Energized Power dependency
-    compileOnly "curse.maven:energized-power-782147:8610561"
+    compileOnly "curse.maven:energized-power-782147:9656966"
 
-    localRuntime "curse.maven:energized-power-782147:8610561"
+    localRuntime "curse.maven:energized-power-782147:9656966"
 
     // Croptopia
-    compileOnly "curse.maven:croptopia-415438:8544539"
+    compileOnly "curse.maven:croptopia-415438:9636330"
 
-    localRuntime "curse.maven:croptopia-415438:8544539"
-    localRuntime "curse.maven:epherolib-885449:8544497"
+    localRuntime "curse.maven:croptopia-415438:9636330"
+    localRuntime "curse.maven:epherolib-885449:8913865"
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    localRuntime "mezz.jei:jei-26.2-neoforge:30.0.0.5"
+    localRuntime "mezz.jei:jei-26.3-neoforge:31.17.0.109"
     //localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:20.0.811"
     //localRuntime "dev.emi:emi-neoforge:1.1.18+1.21.1"
     //localRuntime "curse.maven:advanced-loot-info-1205426:8006703"
@@ -227,7 +227,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 publishMods {
-    displayName = "Energized Power - CT - " + "26.2.x" + " - v" + project.mod_version.split("\\+")[0] + " [NeoForge]"
+    displayName = "Energized Power - CT - " + "26.3.x" + " - v" + project.mod_version.split("\\+")[0] + " [NeoForge]"
     changelog = new File("CHANGELOG.md").exists()?new File("CHANGELOG.md").getText("UTF-8"):""
     type = STABLE
     file = jar.archiveFile
@@ -239,7 +239,7 @@ publishMods {
         curseforge {
             accessToken = getProperty('CURSEFORGE_TOKEN') as String
             projectId = "1536638"
-            minecraftVersionList("26.2")
+            minecraftVersionList("26.3")
             requires("energized-power", "croptopia")
             client = true
             server = true
